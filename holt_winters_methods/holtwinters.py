@@ -96,7 +96,7 @@ test_set = fact[pred_start_date:pred_end_date]
 # план предприятия plan_set для сверки, данные за прогнозный день 27.11.2019
 plan_set = plan[pred_start_date:pred_end_date]
 # выбор метода
-method = additiveHoltWinters
+method = multiplicativeHoltWinters
 # поиск оптимальных постоянных сглаживания:
 # начальные значения
 initial_values = array([0, 0, 0])
@@ -106,7 +106,7 @@ boundaries = [(0, 1), (0, 1), (0, 1)]
 # best_params = fmin_l_bfgs_b(cross_validation, x0=initial_values,
 #                                args=(method, train_set, p), bounds=boundaries, approx_grad=True)
 # найденные постоянные сглаживания
-best_params = [[0.06846567, 0.00032291, 0.26071966]]
+best_params = [[0.329390328, 0.00013994702, 0.134404613]]
 # прогнозирование
 pred = method(best_params[0], train_set, p, 48)[24:]
 # оценка прогноза по метрикам

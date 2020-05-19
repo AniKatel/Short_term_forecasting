@@ -85,7 +85,7 @@ adfuller(remainder)
 # автокорреляции и частные автокорреляции
 acf_pacf(remainder)
 # поиск лучших параметров
-# sarima_best_params(remainder, 0, 0, 4, 3)
+# sarima_best_params(remainder, 24, 0, 0, 4, 3)
 # найденные параметры для 27.11.2019:
 best_params = [2, 3, 1, 2]
 # построение модели

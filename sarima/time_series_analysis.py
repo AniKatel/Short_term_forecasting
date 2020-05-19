@@ -36,7 +36,7 @@ def ljungbox(data):
 
 
 # поиск оптимальных параметров для SARIMA
-def sarima_best_params(data, d, D, param_range, s_param_range):
+def sarima_best_params(data, season_len, d, D, param_range, s_param_range):
     ps = range(0, param_range)
     qs = range(0, param_range)
     Ps = range(0, s_param_range)
@@ -50,15 +50,17 @@ def sarima_best_params(data, d, D, param_range, s_param_range):
     for param in tqdm(parameters_list):
         try:
             model = sm.tsa.SARIMAX(data, order=(param[0], d, param[1]),
-                                   seasonal_order=(param[2], D, param[3], 24)).fit(disp=False)
+                                   seasonal_order=(param[2], D, param[3], season_len)).fit(disp=False)
         except:
             print('Ошибка! Неправильные параметры:', param)
             continue
         aic = model.aic
         if aic < best_aic:
             best_aic = aic
+            best_param = param
         results.append([param, model.aic])
     result_table = DataFrame(results)
     result_table.columns = ['параметры', 'aic']
     print('Наилучшие параметры:')
     print(result_table.sort_values(by='aic', ascending=True).head())
+    return best_param

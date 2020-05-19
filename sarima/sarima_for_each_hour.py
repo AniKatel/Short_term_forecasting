@@ -28,6 +28,8 @@ for i in range(0,24):
     fact_by_hours.append(fact[i::24])
 # список для хранения прогнозных значений
 total_pred = []
+# список для параметров модели
+best_params = []
 # найденные параметры для 27.11.2019:
 best_params = [(1, 2, 2, 2), (6, 3, 1, 2), (3, 5, 1, 2), (2, 5, 1, 1), (0, 2, 1, 2), (2, 4, 1, 1),
                (0, 2, 2, 2), (5, 1, 1, 2), (3, 2, 1, 2), (5, 2, 1, 2), (1, 4, 1, 2), (3, 1, 1, 2),
@@ -48,7 +50,7 @@ for j in range(0,24):
     adfuller(train_set_diff)
     acf_pacf(train_set_diff)
     # ряд стационарен, можно переходить к поиску оптимальных параметров
-    # best_params.append(sarima_best_params(train_set, 1, 0, 7, 3))
+    # best_params.append(sarima_best_params(train_set, 7, 1, 0, 7, 3))
     # построение модели
     model = sm.tsa.SARIMAX(train_set, order=(best_params[j][0], 1, best_params[j][1]),
                           seasonal_order=(best_params[j][2], 0, best_params[j][3], 7)).fit(disp=False)

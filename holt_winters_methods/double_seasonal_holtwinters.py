@@ -67,7 +67,7 @@ def double_seasonal_additiveHoltWinters(params, ts, p1, p2, h):
 
 
 # мультипликативный метод Хольта-Уинтерса с двойной сезонностью
-def double_seasonal_multiplicativeHoltWinters(ts, p1, p2, h, params):
+def double_seasonal_multiplicativeHoltWinters(params, ts, p1, p2, h):
     alpha, beta, gamma, delta = params
     # инициализация
     # уровень ряда
@@ -121,7 +121,7 @@ test_set = fact[pred_start_date:pred_end_date]
 # план предприятия plan_set для сверки, данные за прогнозный день 27.11.2019
 plan_set = plan[pred_start_date:pred_end_date]
 # выбор метода
-method = double_seasonal_additiveHoltWinters
+method = double_seasonal_multiplicativeHoltWinters
 # поиск оптимальных постоянных сглаживания:
 # начальные значения
 initial_values = array([0, 0, 0, 0])
@@ -130,7 +130,7 @@ boundaries = [(0, 1), (0, 1), (0, 1), (0, 1)]
 # оптимизация
 # best_params = fmin_l_bfgs_b(CrossValidation, x0=initial_values, args=(method, train_set, p1, p2), bounds=boundaries, approx_grad=True)
 # найденные постоянные сглаживания
-best_params = [[0.02793421, 0, 0.08607067, 0.07687854]]
+best_params = [[0.334097458, 0.000291639411, 0.278284232, 0.123083456]]
 # прогнозирование
 pred = method(best_params[0], train_set, p1, p2, 48)[24:]
 # оценка прогноза по метрикам
